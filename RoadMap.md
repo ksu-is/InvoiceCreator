@@ -3,8 +3,8 @@
 - [X] Create Readme.md
 - [X] Create projectroadmap.md
 - [X] Establish the project and core functionality.
-- [] Create project folder and install tools.
-- [] Input sale info, calculate totals, generate PDF invoices.
+- [X] Create project folder and install tools.
+- [X] Input sale info, calculate totals, generate PDF invoices.
 
 #Customization and Testing
 - [] Allow simple template changes and support different currencies.
