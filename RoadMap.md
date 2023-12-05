@@ -7,10 +7,9 @@
 - [X] Input sale info, calculate totals, generate PDF invoices.
 
 #Customization and Testing
-- [] Allow simple template changes and support different currencies.
-- [] Thoroughly test and fix any issues.
+- [X] Thoroughly test and fix any issues.
 
 #Final
-- [] Write a basic guide and document key details.
-- [] Perform final checks and prepare for release.
-- [] Release and turn in.
+- [X] Write a basic guide and document key details.
+- [X] Perform final checks and prepare for release.
+- [X] Release and turn in.

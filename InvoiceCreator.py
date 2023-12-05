@@ -1,4 +1,6 @@
 from datetime import datetime
+from io import BytesIO
+from reportlab.pdfgen import canvas
 
 class Company:
     def __init__(self, name, address, phone_number):
@@ -14,31 +16,52 @@ class Invoice:
         self.date = datetime.now()
 
     def generate_invoice(self):
-        invoice_text = f"===== Invoice =====\n"
-        invoice_text += f"Date: {self.date.strftime('%Y-%m-%d %H:%M:%S')}\n"
-        invoice_text += f"Company: {self.company.name}\n"
-        invoice_text += f"Address: {self.company.address}\n"
-        invoice_text += f"Phone Number: {self.company.phone_number}\n\n"
-        invoice_text += f"Customer: {self.customer_name}\n\n"
-        invoice_text += "Items:\n"
+        buffer = BytesIO()
+        p = canvas.Canvas(buffer)
+    
+        # Header
+        p.drawString(100, 800, f"===== Invoice =====")
+        p.drawString(100, 780, f"Date: {self.date.strftime('%Y-%m-%d %H:%M:%S')}")
+        p.drawString(100, 760, f"Company: {self.company.name}")
+        p.drawString(100, 740, f"Address: {self.company.address}")
+        p.drawString(100, 720, f"Phone Number: {self.company.phone_number}")
+    
+        p.drawString(100, 680, f"Customer: {self.customer_name}")
+    
+        # Items
+        p.drawString(100, 640, "Items")
+        y_position = 620
         total_amount = 0
 
         for item in self.items:
             item_name, quantity, unit_price = item
             total_item_amount = quantity * unit_price
             total_amount += total_item_amount
-            invoice_text += f"{item_name} - Quantity: {quantity}, Unit Price: ${unit_price}, Total: ${total_item_amount}\n"
 
-        invoice_text += f"\nTotal Amount: ${total_amount}\n"
-        invoice_text += "==================\n"
-        invoice_text += "Thank you for your business. Have a wonderful day!"
+            item_text = f"{item_name} - Quantity: {quantity}, Unit Price: ${unit_price}, Total: ${total_item_amount}"
+            p.drawString(100, y_position, item_text)
+            y_position -=  20  
+        
+        # Total Amount
+        p.drawString(100, y_position, f"Total Amount: ${total_amount}")
 
-        return invoice_text
+        # Footer
+        p.drawString(100, 100, "Thank you for your business. Have a wonderful day!")
+        p.drawString(100, 80, "==================")
+
+        p.showPage()
+        p.save()
+
+        buffer.seek(0)
+        return buffer
 
     def save_invoice(self):
-        filename = f"Invoice_{self.date.strftime('%Y%m%d_%H%M%S')}.txt"
-        with open(filename, 'w') as file:
-            file.write(self.generate_invoice())
+        filename = f"Invoice_{self.date.strftime('%Y%m%d_%H%M%S')}.pdf"
+        buffer = self.generate_invoice()
+
+        with open(filename, 'wb') as file:
+            file.write(buffer.getvalue())
+
         return filename
 
 # Get user input for company details
@@ -65,10 +88,7 @@ company = Company(company_name, company_address, company_phone_number)
 invoice = Invoice(customer_name, items, company)
 
 # Create and display the invoice
-invoice_text = invoice.generate_invoice()
-
-print("\nInvoice:")
-print(invoice_text)
+invoice_pdf_buffer = invoice.generate_invoice()
 
 # Save the invoice to a file
 filename = invoice.save_invoice()

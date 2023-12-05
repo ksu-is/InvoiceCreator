@@ -1,0 +1,23 @@
+# Step 1: Install Required Libraries
+- Install 'reportlab' library.
+
+# Step 2: Set Up a Text Editor or IDE
+- An option is to install Visual Studio Code.
+
+# Step 3: Write/copy the Invoice Creator code
+- Create a new python file and copy and paste the code into the file.
+
+# Step 4: Run the Script
+- In Visual Studio Code, run the python file in the terminal.
+
+# Step 5: Enter Company and Invoice Details
+- This is where the information that the code will generate is to be entered.
+- Information like company name, phone number, address, customer name, items sold, price, etc. is entered here.
+
+# Step 6: View the Invoice
+- After successfully running the code, the invoice will be saved in pdf format.
+- Locate and view the invoice to make sure everything is as it should be.
+
+# Optional: Install a PDF Viewer Extension if using Visual Studio Code
+- Search for PDF Viewer extensions in Visual Studio Code and install one of the extensions, such as vscode-pdf.
+- This will allow you to open and view the pdf in Visual Studio Code after running and generating the PDF invoice.
